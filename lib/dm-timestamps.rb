@@ -3,10 +3,10 @@ require 'dm-core'
 module DataMapper
   module Timestamps
     TIMESTAMP_PROPERTIES = {
-      :updated_at => [ DateTime, lambda { |r| DateTime.now                             } ],
-      :updated_on => [ Date,     lambda { |r| Date.today                               } ],
-      :created_at => [ DateTime, lambda { |r| r.created_at || (DateTime.now if r.new?) } ],
-      :created_on => [ Date,     lambda { |r| r.created_on || (Date.today   if r.new?) } ],
+      :updated_at => [ DateTime, lambda { |r| Time.zone.now.to_datetime                             } ],
+      :updated_on => [ Date,     lambda { |r| Time.zone.today.to_date                               } ],
+      :created_at => [ DateTime, lambda { |r| r.created_at || (Time.zone.now.to_datetime if r.new?) } ],
+      :created_on => [ Date,     lambda { |r| r.created_on || (Time.zone.today.to_date   if r.new?) } ],
     }.freeze
 
     def self.included(model)
